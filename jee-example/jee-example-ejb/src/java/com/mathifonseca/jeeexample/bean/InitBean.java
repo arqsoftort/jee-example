@@ -1,6 +1,5 @@
 package com.mathifonseca.jeeexample.bean;
 
-import com.mathifonseca.jeeexample.domain.Author;
 import com.mathifonseca.jeeexample.dto.AuthorDto;
 import com.mathifonseca.jeeexample.dto.BookDto;
 import javax.annotation.PostConstruct;
@@ -8,11 +7,14 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
 import javax.ejb.Startup;
+import org.apache.log4j.Logger;
 
 @Startup
 @Singleton
 @LocalBean
 public class InitBean {
+    
+    static Logger log = Logger.getLogger(InitBean.class.getName());
     
     @EJB
     private AuthorBean authorBean;
@@ -20,7 +22,7 @@ public class InitBean {
     @PostConstruct
     public void init() {
         
-        System.out.println("en init");
+        log.info("Initializing data...");
          
         if (authorBean.getAuthors(false).isEmpty()) {
             AuthorDto authorDto = new AuthorDto();
